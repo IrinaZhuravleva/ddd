@@ -41,7 +41,10 @@ function getQuantityElements(heightElement) {
 
 function startGame() {
     start.classList.add('hide');
-
+    gameArea.innerHTML = '';
+    car.style.left = '125px';
+    car.style.top = 'auto';
+    car.style.bottom = '10px';
     for(let i = 0; i < getQuantityElements(100); i++ ) {
         //создаем документ
         const line = document.createElement('div');
@@ -63,7 +66,7 @@ function startGame() {
         gameArea.appendChild(enemy);
 
     }
-
+    setting.score = 0;
     setting.start = true; 
     gameArea.appendChild(car);
     setting.x = car.offsetLeft;
@@ -72,6 +75,9 @@ function startGame() {
 };
 
 function playGame() {
+    setting.score += setting.speed;
+    // score.textContent = 'SCORE: ' + setting.score;
+    score.innerHTML = 'SCORE<br>' + setting.score;
     moveRoad();
     moveEnemy();
     if (setting.start) {
@@ -125,6 +131,18 @@ function moveRoad() {
 function moveEnemy() {
     let enemy = document.querySelectorAll('.enemy');
     enemy.forEach(function(item){
+        let carRect = car.getBoundingClientRect();
+        let enemyRect = item.getBoundingClientRect();
+        if (carRect.top <= enemyRect.bottom && 
+            carRect.right >= enemyRect.left &&
+            carRect.left <= enemyRect.right &&
+            carRect.bottom >= enemyRect.top) {
+            console.log(start.offsetHeight);
+            setting.start = false;
+            start.classList.remove('hide');
+            // score.style.top = start.offsetHeight;
+            start.style.top = '80px';
+        }
         item.y += setting.speed / 2;
         item.style.top = item.y + 'px';
         if(item.y >= document.documentElement.clientHeight) {
@@ -135,3 +153,14 @@ function moveEnemy() {
 
     
 }
+
+// Дополнительные задания:
+// 1) В объект keys не должно добавляться новых свойств, для этого добавить условия
+
+// 2) Добавить музыкальное сопровождение в игре(с управлением или без)
+
+// 3) добавить скрипт который на дорогу будет добавлять рандомные модели машинок соперников.
+
+// 4) Вместо одной кнопки "Начать игру" Сделать минимум 3(Легкий, средний, сложный) уровня игры и 3 кнопки под них!
+
+// 5) сохранять в LocalStorage лучший результат и если рекорд побит то сообщать об этом после окончании игры. 
