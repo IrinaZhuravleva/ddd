@@ -57,8 +57,9 @@ function startGame() {
         const enemy = document.createElement('div');
         enemy.classList.add('enemy');
         enemy.y = -100 * setting.traffic * (i + 1);
+        enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
         enemy.style.top = enemy.y + 'px';
-
+        enemy.style.background = 'background: transparent url(./image/enemy.png) center / cover no-repeat;';
         gameArea.appendChild(enemy);
 
     }
@@ -128,6 +129,7 @@ function moveEnemy() {
         item.style.top = item.y + 'px';
         if(item.y >= document.documentElement.clientHeight) {
             item.y = -100 * setting.traffic;
+            item.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
         }
     });
 
